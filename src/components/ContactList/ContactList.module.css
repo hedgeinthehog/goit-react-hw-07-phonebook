@@ -1,0 +1,21 @@
+.listItem {
+  line-height: 1.6;
+}
+
+.btn {
+  margin-left: 10px;
+  font-size: 12px;
+  background-color: #8ecc67;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn::first-letter {
+  text-transform: capitalize;
+}
+
+.btn:hover,
+.btn:focus {
+  outline: none;
+  box-shadow: 2px 2px 10px -2px #386919;
+}
