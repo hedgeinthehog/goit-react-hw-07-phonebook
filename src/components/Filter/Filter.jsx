@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
-import styles from './Filter.module.css';
+import ContentBox from '../styled-components/ContentBox';
+import Label from '../styled-components/Label';
+import Input from '../styled-components/Input';
 
 const Filter = ({ filter, onChange }) => (
-  <div className={styles.filter}>
-    <label>
+  <ContentBox>
+    <Label>
       Find contacts by name
-      <input
-        type="text"
-        className={styles.filterInput}
-        name="filter"
-        value={filter}
-        onChange={onChange}
-      />
-    </label>
-  </div>
+      <Input type="text" name="filter" value={filter} onChange={onChange} />
+    </Label>
+  </ContentBox>
 );
 
 Filter.propTypes = {

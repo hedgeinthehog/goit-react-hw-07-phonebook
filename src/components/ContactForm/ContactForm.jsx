@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import styles from './ContactForm.module.css';
+import Button from '../styled-components/Button';
+import ContentBox from '../styled-components/ContentBox';
+import Input from '../styled-components/Input';
+import Label from '../styled-components/Label';
+import FormField from '../styled-components/FormField';
+
+const Form = ContentBox.withComponent('form');
 
 class ContactForm extends React.Component {
   state = {
@@ -33,12 +39,11 @@ class ContactForm extends React.Component {
     const { name, number } = this.state;
 
     return (
-      <form className={styles.contactForm} onSubmit={this.handleSubmit}>
-        <div className={styles.formField}>
-          <label>
+      <Form onSubmit={this.handleSubmit}>
+        <FormField>
+          <Label>
             Name
-            <input
-              className={styles.input}
+            <Input
               type="text"
               name="name"
               value={name}
@@ -47,13 +52,12 @@ class ContactForm extends React.Component {
               required
               onChange={this.handleChange}
             />
-          </label>
-        </div>
-        <div className={styles.formField}>
-          <label>
+          </Label>
+        </FormField>
+        <FormField>
+          <Label>
             Number
-            <input
-              className={styles.input}
+            <Input
               type="tel"
               name="number"
               value={number}
@@ -62,12 +66,12 @@ class ContactForm extends React.Component {
               required
               onChange={this.handleChange}
             />
-          </label>
-        </div>
-        <button type="submit" className={styles.btn}>
-          add contact
-        </button>
-      </form>
+          </Label>
+        </FormField>
+        <Button type="submit" bg="light" position="bottom">
+          Add contact
+        </Button>
+      </Form>
     );
   }
 }

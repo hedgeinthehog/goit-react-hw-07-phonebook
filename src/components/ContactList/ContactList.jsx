@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import styles from './ContactList.module.css';
+import Button from '../styled-components/Button';
 
 const ContactList = ({ contacts, onClick }) => {
   const handleDelBtn = event => {
@@ -10,16 +10,18 @@ const ContactList = ({ contacts, onClick }) => {
   return (
     <ul>
       {contacts.map(({ id, name, number }) => (
-        <li className={styles.listItem} key={id}>
+        <li key={id}>
           {name} {number}
-          <button
+          <Button
             type="button"
-            className={styles.btn}
             name={id}
             onClick={handleDelBtn}
+            size="small"
+            bg="dark"
+            position="right"
           >
             Delete
-          </button>
+          </Button>
         </li>
       ))}
     </ul>
@@ -34,6 +36,7 @@ ContactList.propTypes = {
       number: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ContactList;
