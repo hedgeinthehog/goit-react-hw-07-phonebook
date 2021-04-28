@@ -31,11 +31,11 @@ class App extends React.Component {
   addNewContact = newContact => {
     const { contacts } = this.state;
     const isInContacts = contacts.find(
-      contact => contact.name === newContact.name,
+      contact => contact.name.trim() === newContact.name.trim(),
     );
 
     isInContacts
-      ? alert(`${newContact.name} is already in contacts`)
+      ? alert(`${newContact.name.trim()} is already in contacts`)
       : this.setState(prevState => ({
           contacts: [newContact, ...prevState.contacts],
         }));
