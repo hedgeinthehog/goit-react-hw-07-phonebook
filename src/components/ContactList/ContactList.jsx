@@ -1,12 +1,9 @@
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../styled-components/Button';
+import * as actions from '../../redux/contacts/contacts-actions';
 
-const ContactList = ({ contacts, onClick }) => {
-  const handleDelBtn = event => {
-    const { name } = event.target;
-    onClick(name);
-  };
-
+const ContactList = ({ contacts, deleteContact }) => {
   return (
     <ul>
       {contacts.map(({ id, name, number }) => (
@@ -15,7 +12,7 @@ const ContactList = ({ contacts, onClick }) => {
           <Button
             type="button"
             name={id}
-            onClick={handleDelBtn}
+            onClick={deleteContact}
             size="small"
             bg="dark"
             position="right"
@@ -36,7 +33,11 @@ ContactList.propTypes = {
       number: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  onClick: PropTypes.func.isRequired,
+  deleteContact: PropTypes.func.isRequired,
 };
 
-export default ContactList;
+const mapDispatchToProps = dispatch => ({
+  deleteContact: e => dispatch(actions.deleteContact(e.target.name)),
+});
+
+export default connect(null, mapDispatchToProps)(ContactList);

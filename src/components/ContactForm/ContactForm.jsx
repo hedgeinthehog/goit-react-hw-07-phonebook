@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
+import { connect } from 'react-redux';
 import Button from '../styled-components/Button';
 import ContentBox from '../styled-components/ContentBox';
 import Input from '../styled-components/Input';
 import Label from '../styled-components/Label';
 import FormField from '../styled-components/FormField';
+import { addContact } from '../../redux/contacts/contacts-actions';
 
 const Form = ContentBox.withComponent('form');
 
@@ -22,12 +23,11 @@ class ContactForm extends React.Component {
 
   handleSubmit = event => {
     const { name, number } = this.state;
-    const id = uuidv4();
-    const newContact = { name, number, id };
+    const { createNewContact } = this.props;
 
     event.preventDefault();
 
-    this.props.onSubmit(newContact);
+    createNewContact(name, number);
     this.reset();
   };
 
@@ -77,7 +77,11 @@ class ContactForm extends React.Component {
 }
 
 ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  createNewContact: PropTypes.func.isRequired,
 };
 
-export default ContactForm;
+const mapDispatchToProps = dispatch => ({
+  createNewContact: (name, number) => dispatch(addContact(name, number)),
+});
+
+export default connect(null, mapDispatchToProps)(ContactForm);
