@@ -40,19 +40,23 @@ const Button = styled.button`
         return 'margin: 0;';
     }
   }}
-
+  
   &:hover,
   &:focus {
     outline: none;
-    box-shadow: 0px 0px 10px 0px
-    ${props => {
-      if (props.bg === 'light') {
-        return ` ${props.theme.primaryBgColor};`;
-      }
-      if (props.bg === 'dark') {
-        return ` ${props.theme.invertedBgColor};`;
-      }
-    }}
+    box-shadow: 0 0 0 2px ${props => props.theme.accentColor};
+  }
+
+  &:active {
+    outline: none;
+    box-shadow: 0px 0px 8px 2px
+      ${props => {
+        if (props.bg === 'light') {
+          return ` ${props.theme.primaryBgColor};`;
+        }
+        if (props.bg === 'dark') {
+          return ` ${props.theme.invertedBgColor};`;
+        }
       }};
   }
 `;
