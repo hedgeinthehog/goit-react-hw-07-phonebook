@@ -6,7 +6,7 @@ import ContentBox from '../styled-components/ContentBox';
 import Input from '../styled-components/Input';
 import Label from '../styled-components/Label';
 import FormField from '../styled-components/FormField';
-import * as actions from '../../redux/contacts/contacts-actions';
+import contactsOperations from '../../redux/contacts/contacts-operations';
 
 const Form = ContentBox.withComponent('form');
 
@@ -82,7 +82,7 @@ ContactForm.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   createNewContact: (name, number) =>
-    dispatch(actions.addContact(name, number)),
+    dispatch(contactsOperations.addContact(name, number)),
 });
 
 export default connect(null, mapDispatchToProps)(ContactForm);

@@ -4,6 +4,7 @@ import ContentBox from '../styled-components/ContentBox';
 import Label from '../styled-components/Label';
 import Input from '../styled-components/Input';
 import * as actions from '../../redux/contacts/contacts-actions';
+import contactsSelectors from '../../redux/contacts/contacts-selectors';
 
 const Filter = ({ value, onChange }) => (
   <ContentBox>
@@ -20,7 +21,7 @@ Filter.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  value: state.contacts.filter,
+  value: contactsSelectors.getFilter(state),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../styled-components/Button';
-import * as actions from '../../redux/contacts/contacts-actions';
+import contactsOperations from '../../redux/contacts/contacts-operations';
+import contactsSelectors from '../../redux/contacts/contacts-selectors';
 
-const ContactList = ({ contacts, deleteContact }) => {
+const ContactList = ({ filteredContacts, deleteContact }) => {
   return (
     <ul>
-      {contacts.map(({ id, name, number }) => (
+      {filteredContacts.map(({ id, name, number }) => (
         <li key={id}>
           {name} {number}
           <Button
@@ -26,7 +27,7 @@ const ContactList = ({ contacts, deleteContact }) => {
 };
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
+  filteredContacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
@@ -36,8 +37,12 @@ ContactList.propTypes = {
   deleteContact: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  deleteContact: e => dispatch(actions.deleteContact(e.target.name)),
+const mapStateToProps = state => ({
+  filteredContacts: contactsSelectors.getFilteredContacts(state),
 });
 
-export default connect(null, mapDispatchToProps)(ContactList);
+const mapDispatchToProps = dispatch => ({
+  deleteContact: e => dispatch(contactsOperations.deleteContact(e.target.name)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

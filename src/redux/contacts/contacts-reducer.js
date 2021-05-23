@@ -1,9 +1,21 @@
 import { combineReducers } from 'redux';
-import * as actions from './contacts-actions';
+import {
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+  addContactRequest,
+  addContactSuccess,
+  addContactError,
+  deleteContactRequest,
+  deleteContactSuccess,
+  deleteContactError,
+  updateFilter,
+} from './contacts-actions';
 import { createReducer } from '@reduxjs/toolkit';
 
 const items = createReducer([], {
-  [actions.addContact]: (state, { payload }) => {
+  [fetchContactsSuccess]: (_, { payload }) => payload,
+  [addContactSuccess]: (state, { payload }) => {
     const contactExists = state.find(contact => contact.name === payload.name);
 
     if (contactExists) {
@@ -12,47 +24,44 @@ const items = createReducer([], {
     }
     return [payload, ...state];
   },
-  [actions.deleteContact]: (state, { payload }) =>
+  [deleteContactSuccess]: (state, { payload }) =>
     state.filter(contact => contact.id !== payload),
 });
 
 const filter = createReducer('', {
-  [actions.updateFilter]: (state, { payload }) => payload,
+  [updateFilter]: (_, { payload }) => payload,
+});
+
+const loading = createReducer(false, {
+  [fetchContactsRequest]: () => true,
+  [fetchContactsSuccess]: () => false,
+  [fetchContactsError]: () => false,
+  [addContactRequest]: () => true,
+  [addContactSuccess]: () => false,
+  [addContactError]: () => false,
+  [deleteContactRequest]: () => true,
+  [deleteContactSuccess]: () => false,
+  [deleteContactError]: () => false,
+});
+
+const error = createReducer(null, {
+  [fetchContactsError]: (_, { payload }) => {
+    console.log(payload);
+    return payload;
+  },
+  [addContactError]: (_, { payload }) => {
+    console.log(payload);
+    return payload;
+  },
+  [deleteContactError]: (_, { payload }) => {
+    console.log(payload);
+    return payload;
+  },
 });
 
 export default combineReducers({
   items,
   filter,
+  loading,
+  error,
 });
-
-// Redux w/o toolkit
-// const items = (state = [], { type, payload }) => {
-//   switch (type) {
-//     case types.ADD:
-//       const contactExists = state.find(
-//         contact => contact.name === payload.name,
-//       );
-
-//       if (contactExists) {
-//         alert(`${payload.name} is already in contacts`);
-//         return state;
-//       }
-//       return [payload, ...state];
-
-//     case types.DELETE:
-//       return state.filter(contact => contact.id !== payload);
-
-//     default:
-//       return state;
-//   }
-// };
-
-// const filter = (state = '', { type, payload }) => {
-//   switch (type) {
-//     case types.UPDATE_FILTER:
-//       return payload;
-
-//     default:
-//       return state;
-//   }
-// };
